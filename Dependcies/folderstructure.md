@@ -38,4 +38,4 @@ StockGrid/
 ├── docs/                       # Documentation, notes, CV snippets
 │   └── README.md
 │
-└── .gitignore                  # Git ignore file
+└── .gitignore                  # Git ignore file te
