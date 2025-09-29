@@ -1,0 +1,15 @@
+# Backend dependencies
+Flask==2.3.2               # Lightweight web framework for API
+Flask-Cors==3.1.2           # Handle cross-origin requests for mobile dashboard
+psycopg2-binary==2.9.7      # PostgreSQL database adapter
+SQLAlchemy==2.0.20           # ORM for database models
+python-dotenv==1.0.0         # Load environment variables from .env
+gunicorn==20.1.0             # WSGI server for deployment on Heroku
+
+# Desktop client dependencies
+pyscard==2.0.3               # NFC smart card reader support
+nfcpy==1.0.3                  # NFC reader communication
+qrcode==7.4                    # Generate QR codes
+Pillow==10.0.0                 # Image support for QR codes
+tk==0.1.0                      # Tkinter GUI (optional, often built-in with Python)
+requests==2.31.0               # HTTP client to communicate with backend API

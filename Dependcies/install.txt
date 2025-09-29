@@ -1,0 +1,12 @@
+Create and activate your virtual environment:
+
+python -m venv venv
+venv\Scripts\activate  # Windows
+
+
+Install all dependencies:
+
+pip install -r requirements.txt
+
+
+This ensures both your backend API and desktop GUI client are ready to run.
