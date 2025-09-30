@@ -1,182 +1,180 @@
-Project Requirements: StockGrid
-1. Executive Summary
-This document outlines the functional and non-functional requirements for "StockGrid," a new inventory management system. The system is inspired by the operational model of retailers like CEX, focusing on the buying, selling, and tracking of unique, second-hand items.
+StockGrid: Inventory Management System
+StockGrid is a web-based inventory management and Point-of-Sale (POS) system designed for retailers that buy, sell, and track unique, second-hand items. Inspired by the operational model of retailers like CEX, it streamlines inventory control by assigning a unique QR code to every item and offers flexible, secure login options for staff.
 
-Key features include multiple secure login options for staff (NFC card, QR Code, password) accessible from both desktop and mobile devices, and unique QR code generation for every inventory item to streamline tracking. The backend will be powered by Python, with a relational SQL database for robust data management. The architecture will be web-based to ensure it can be hosted locally for development and deployed online for live use, with a mobile-responsive interface allowing staff to use their smartphones as terminals.
+The application is built with a Python backend and a responsive frontend, allowing it to be used on both desktop terminals and mobile devices.
 
-2. System Scope
-2.1. In-Scope
-User authentication via traditional credentials, NFC cards, and QR codes.
+✨ Key Features
+[ ] Multi-Factor Staff Authentication: Secure login via username/password, scannable QR codes, or NFC cards.
 
-Role-based access control (Admin, Staff).
+[ ] Role-Based Access Control: Differentiated permissions for Administrator and Staff Member roles.
 
-Comprehensive inventory management (adding, searching, updating, grading).
+[ ] Comprehensive Inventory Management: Add, search, grade, and update the status of unique items.
 
-Automatic generation and printing of QR codes for item serial numbers.
+[ ] Automatic QR Code Generation: Instantly create and print unique QR code labels for every item upon intake, linking it to a unique SKU.
 
-Point-of-Sale (POS) functionality for sales and customer buy-ins.
+[ ] Integrated Point-of-Sale (POS): A unified interface to handle both customer sales and buy-ins.
 
-A responsive web application for accessing core system features on desktops and smartphones.
+[ ] Mobile-Responsive Design: Enables staff to use their smartphones as mobile terminals for inventory management and sales.
 
-Basic reporting on sales and stock levels.
+[ ] Reporting: Generate daily sales reports and current stock level reports.
 
-2.2. Out-of-Scope
-Native mobile applications (iOS/Android). The focus is on a web-based experience.
+💻 Proposed Technology Stack
+Software
+[ ] Backend Language: Python 3.8+
 
-Customer-facing e-commerce website.
+[ ] Backend Framework: Django (Recommended)
 
-Advanced analytics and business intelligence dashboards.
+[ ] Database: PostgreSQL or MySQL (Production), SQLite (Development)
 
-Integration with third-party accounting software.
+[ ] Frontend Framework: React or Vue.js (Recommended) with HTML/CSS/JavaScript
 
-Employee payroll and HR management.
+[ ] Key Python Libraries:
 
-3. User Roles & Permissions
-Administrator:
+[ ] psycopg2-binary / mysql-connector-python: Database drivers
 
-Full access to all system functionalities.
+[ ] qrcode: For generating QR code images
 
-Can add, edit, and delete staff accounts.
+[ ] Pillow: Image processing library
 
-Can assign NFC cards and generate login QR codes for staff.
+[ ] pyscard: NFC hardware communication
 
-Can override prices and modify system settings.
+[ ] reportlab: PDF generation for reports and receipts
 
-Can view and export all reports.
+Hardware
+[ ] Server: Local PC for development; cloud server (AWS, Heroku, etc.) for production.
 
-Staff Member:
+[ ] Terminals: Desktop computers and modern iOS/Android smartphones.
 
-Can log in using their assigned NFC card, QR code, or username/password.
+[ ] NFC Reader: USB-based reader (e.g., OMNIKEY series).
 
-Can process sales and buy-ins.
+[ ] Barcode Scanner: Standard USB-based 2D QR code scanner.
 
-Can add new items to the inventory.
+[ ] Printers:
 
-Can search for and view item details.
+[ ] Label Printer: For printing adhesive QR code stickers.
 
-Can print QR code labels for items.
+[ ] Receipt Printer: Standard POS thermal printer.
 
-Can view their own sales data for the day.
+📋 System Scope
+In Scope ✔️
+[ ] User authentication (Password, NFC, QR code).
 
-4. Functional Requirements
-4.1. User Management & Authentication
-FR-001: The system shall allow administrators to create, view, update, and deactivate staff accounts.
+[ ] Admin and Staff roles with distinct permissions.
 
-FR-002: Each new staff account must be associated with a unique username and a secure password.
+[ ] Full inventory lifecycle management (add, search, update status, grade items).
 
-FR-003: The system shall provide a secure login screen for username/password authentication.
+[ ] Automated generation and printing of item QR codes.
 
-FR-004: The system shall interface with a USB NFC reader for desktop use. The web application should also leverage the Web NFC API to allow login via a compatible mobile device's NFC reader.
+[ ] Point-of-Sale (POS) for sales and buy-ins.
 
-FR-005: The system shall allow staff to log in by scanning a personal QR code using either a USB barcode scanner (on desktop) or the device's camera via the web app.
+[ ] Responsive web application for desktop and mobile access.
 
-FR-006: Administrators must have a dedicated interface to pair a new NFC card's unique ID with a staff account.
+[ ] Basic sales and stock reports.
 
-FR-007: Administrators must have an interface to generate and print a QR code and/or barcode associated with each staff account for login and reference purposes.
+Out of Scope ❌
+[ ] Native iOS/Android applications.
 
-4.2. Inventory Management
-FR-008: The system must allow staff to add new items acquired from customers (buy-ins).
+[ ] A public, customer-facing e-commerce website.
 
-FR-009: When adding an item, the user must input the following details:
+[ ] Advanced business intelligence or analytics dashboards.
 
-Category (e.g., Consoles, Games, Phones)
+[ ] Integration with third-party accounting software.
 
-Product Name
+[ ] HR features like payroll management.
 
-Model/Version
+👤 User Roles & Permissions
+👑 Administrator
+[ ] Full System Access: Can perform all actions.
 
-Condition/Grade (e.g., A - Mint, B - Good, C - Fair)
+[ ] User Management: Create, edit, and delete staff accounts.
 
-Buy-in Price
+[ ] Credential Assignment: Assign NFC cards and generate login QR codes for staff.
 
-Suggested Sale Price (can be auto-calculated or manually set)
+[ ] System Overrides: Modify prices and adjust system settings.
 
-Customer's Serial Number (if applicable)
+[ ] Reporting: View and export all system reports.
 
-FR-010: Upon successful submission of a new item, the system shall:
+👥 Staff Member
+[ ] Login: Access the system with an assigned NFC card, QR code, or username/password.
 
-Generate a unique internal Stock Keeping Unit (SKU).
+[ ] Transactions: Process customer sales and buy-ins.
 
-Generate a QR code that encodes the unique internal SKU.
+[ ] Inventory: Add new items, search the database, and print QR labels.
 
-FR-011: The system shall provide a feature to print the generated QR code onto a physical label for the item.
+[ ] Reporting: View their personal sales data for the current day.
 
-FR-012: The system must provide a powerful search and filter function to find items based on SKU, name, category, or serial number.
+⚙️ Functional Requirements
+FR-1: User Management & Authentication
+[ ] FR-001: Admins can create, view, update, and deactivate staff accounts.
 
-FR-013: Staff must be able to update an item's status (e.g., "In Stock", "Sold", "Awaiting Repair", "Faulty").
+[ ] FR-002: Staff accounts require a unique username and a secure password.
 
-4.3. Point of Sale (POS)
-FR-014: The POS interface must allow staff to scan an item's QR code (using a USB scanner or phone camera) to add it to a sales transaction.
+[ ] FR-003: A secure login screen for username/password authentication.
 
-FR-015: The system shall calculate the total cost of a transaction, including multiple items.
+[ ] FR-004: Support for USB NFC readers (desktop) and Web NFC API (mobile) for login.
 
-FR-016: Upon completion of a sale, the system shall:
+[ ] FR-005: Support for login by scanning a personal QR code via a USB scanner or mobile camera.
 
-Update the status of the sold items to "Sold".
+[ ] FR-006: Admin interface to pair a new NFC card's ID with a staff account.
 
-Log the transaction details (items, total price, date, time, staff member).
+[ ] FR-007: Admin interface to generate and print a unique login QR code for a staff member.
 
-Provide an option to print a customer receipt.
+FR-2: Inventory Management
+[ ] FR-008: Staff can add new items acquired from customers (buy-ins).
 
-FR-017: The POS interface must also handle the buy-in process, linking it to the inventory addition workflow (FR-009).
+[ ] FR-009: Adding an item requires: Category, Product Name, Model, Condition/Grade, Buy-in Price, and Sale Price.
 
-4.4. Reporting
-FR-018: The system shall be able to generate a daily sales report showing total revenue and items sold.
+[ ] FR-010: The system must automatically generate a unique internal SKU and a corresponding QR code for each new item.
 
-FR-019: The system shall be able to generate an inventory report showing all items currently "In Stock", organized by category.
+[ ] FR-011: A feature to print the generated QR code onto a physical label.
 
-FR-020: Administrators must be able to filter reports by date range and by staff member.
+[ ] FR-012: A search function to find items by SKU, name, category, or serial number.
 
-5. Non-Functional Requirements
-NFR-001 (Performance): Item lookups via QR code scan should complete in under 1 second. NFC/QR Code login should authenticate the user in under 2 seconds on a stable connection.
+[ ] FR-013: Staff can update an item's status (e.g., "In Stock", "Sold", "Awaiting Repair").
 
-NFR-002 (Security): All passwords must be hashed and salted. The database must be protected from SQL injection attacks. For a future SaaS model, data for different tenants (stores) must be strictly isolated.
+FR-3: Point of Sale (POS)
+[ ] FR-014: Scan an item's QR code to add it to a sales transaction.
 
-NFR-003 (Usability): The user interface (UI) must be clean, intuitive, and require minimal training. The web interface must be responsive, providing a seamless experience on both desktop and mobile devices.
+[ ] FR-015: The system shall calculate the total cost for all items in a transaction.
 
-NFR-004 (Reliability): The system should be designed to run continuously during business hours. The database should be backed up automatically on a daily basis. The architecture must be scalable to handle multiple tenants in a SaaS environment.
+[ ] FR-016: On sale completion, the system must update item statuses to "Sold", log the transaction, and provide a receipt printing option.
 
-NFR-005 (Hardware Compatibility): The system must be compatible with standard USB NFC readers and QR code scanners. The web application must be compatible with modern mobile browsers (e.g., Chrome on Android, Safari on iOS) that support the necessary Web APIs for camera and NFC access.
+[ ] FR-017: The POS interface must support the buy-in workflow, linking directly to the item addition process.
 
-6. Proposed Technology & Hardware Stack
-6.1. Software
-Backend Language: Python 3.8+
+FR-4: Reporting
+[ ] FR-018: Generate a daily sales report (total revenue, items sold).
 
-Backend Framework: Django is highly recommended for its built-in admin, ORM, security features, and scalability for SaaS.
+[ ] FR-019: Generate an inventory report of all items currently "In Stock".
 
-Database: PostgreSQL or MySQL (recommended for production), SQLite (for initial local development).
+[ ] FR-020: Admins can filter reports by date range and by staff member.
 
-Frontend (GUI): A responsive web application built with HTML/CSS/JavaScript. Using a modern front-end framework like React or Vue.js is strongly advised to manage application state and create a polished user experience on both desktop and mobile.
+🚀 Non-Functional Requirements
+[ ] Performance (NFR-001):
 
-Key Python Libraries:
+[ ] Item lookup via QR scan: < 1 second.
 
-psycopg2-binary or mysql-connector-python (database connection).
+[ ] NFC/QR Code login authentication: < 2 seconds.
 
-qrcode (for generating QR codes).
+[ ] Security (NFR-002):
 
-Pillow (for handling QR code images).
+[ ] Passwords must be hashed and salted.
 
-pyscard (for direct hardware communication with OMNIKEY reader on the server or a local client).
+[ ] The application must be protected against SQL injection.
 
-reportlab (for generating PDF receipts and reports).
+[ ] (Future) Data must be isolated for different tenants in a SaaS model.
 
-6.2. Hardware
-Server: A PC for local hosting and testing, with the capability to deploy the application to a cloud server (e.g., AWS, DigitalOcean, Heroku) in the future.
+[ ] Usability (NFR-003):
 
-Desktop Terminals: Standard computers with USB ports for scanners and readers.
+[ ] The UI must be clean, intuitive, and responsive on both desktop and mobile.
 
-Mobile Terminals: Staff-owned or company-provided smartphones (iOS/Android) for using the web application on the go.
+[ ] Reliability (NFR-004):
 
-NFC Reader: A USB-based NFC card reader (e.g., OMNIKEY series) for desktop use.
+[ ] Designed for continuous operation during business hours.
 
-NFC Cards/Tags: One per staff member (e.g., NTAG215 cards).
+[ ] Automated daily database backups.
 
-2D Barcode Scanner: A USB-based scanner for desktop use (e.g., Symbol 2D scanner).
+[ ] Compatibility (NFR-005):
 
-Printers:
+[ ] Must work with standard USB NFC readers and QR code scanners.
 
-Item Label Printer: A thermal label printer for adhesive QR code stickers.
-
-Reference/Card Printer: A small-format printer for employee login QR codes/barcodes (e.g., Fun Print).
-
-Receipt Printer: A standard POS thermal receipt printer.
+[ ] Web app must be compatible with modern mobile browsers (Chrome, Safari) that support Web APIs for camera and NFC access.
